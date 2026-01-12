@@ -8,9 +8,9 @@
 <!-- Open Graph / WhatsApp -->
 <meta property="og:title" content="Rita & João | Convite de Casamento">
 <meta property="og:description" content="Convidam-no(a) a celebrar o seu casamento · 11.07.2026">
-<meta property="og:image" content="https://ritaejoao.netlify.app/preview.jpg">
+<meta property="og:image" content="https://ritaejoao.github.io/preview.jpg">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ritaejoao.netlify.app/">
+<meta property="og:url" content="https://ritaejoao.github.io/">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,11 +23,16 @@ body {
 
 /* ===== Envelope ===== */
 .envelope-wrapper {
-    min-height: 100svh;
+    position: fixed;
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+
+    min-height: 100vh;      /* desktop */
+    min-height: 100svh;     /* mobile seguro */
+
+    background-color: #f6f5ef;
     opacity: 1;
     transition: opacity 0.6s ease;
 }
@@ -49,7 +54,7 @@ body {
     width: 80px;
     height: 80px;
     position: absolute;
-    top: 55%;
+    top: 53%;
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -242,7 +247,7 @@ function abrirConvite() {
     envelope.classList.add('esconder');
 
     setTimeout(() => {
-        envelope.style.display = 'none';
+        envelope.remove();
         convite.classList.add('visivel');
         document.body.style.overflow = 'auto'; // permite scroll no convite
     }, 600);
@@ -257,7 +262,3 @@ function fecharMapas() { document.getElementById('mapas').style.display = 'none'
 
 </body>
 </html>
-
-
-
-
