@@ -5,17 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rita & João | Convite de Casamento</title>
 
-<!-- Open Graph / WhatsApp -->
 <meta property="og:title" content="Rita & João | Convite de Casamento">
 <meta property="og:description" content="Convidam-no(a) a celebrar o seu casamento · 11.07.2026">
-<meta property="og:image" content="https://ritaejoao.github.io/preview.jpg">
+<meta property="og:image" content="https://ritaejoao.netlify.app/preview.jpg">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ritaejoao.github.io/">
+<meta property="og:url" content="https://ritaejoao.netlify.app/">
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ===== Fundo ===== */
+/* ===== Fundo da página ===== */
 body {
     font-family: 'Georgia', serif;
     background-color: #f6f5ef;
@@ -23,23 +22,11 @@ body {
 
 /* ===== Envelope ===== */
 .envelope-wrapper {
-    position: fixed;
-    inset: 0;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    min-height: 100vh;      /* desktop */
-    min-height: 100svh;     /* mobile seguro */
-
-    background-color: #f6f5ef;
-    opacity: 1;
-    transition: opacity 0.6s ease;
-}
-
-.envelope-wrapper.esconder {
-    opacity: 0;
-    pointer-events: none;
+    position: relative;
 }
 
 .envelope {
@@ -49,12 +36,12 @@ body {
     position: relative;
 }
 
-/* ===== Lacre ===== */
+/* ===== Lacre sobre envelope ===== */
 .lacre {
     width: 80px;
     height: 80px;
     position: absolute;
-    top: 53%;
+    top: 53%; /* ajuste fino conforme a imagem */
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -66,8 +53,8 @@ body {
     position: absolute;
     width: 80px;
     height: 80px;
-    inset: 0;
     border-radius: 50%;
+    top: 0; left: 0;
     animation: pulse 2.5s infinite;
 }
 
@@ -79,32 +66,24 @@ body {
 
 /* ===== Convite ===== */
 .convite {
-    opacity: 0;
-    transform: translateY(40px) scale(0.98);
-    pointer-events: none;
-
+    display: none;
     max-width: 760px;
     margin: 30px auto;
-    background: url('textura-papel.png') center/cover no-repeat;
+    background: url('textura-papel.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     padding: 60px 50px;
     border-radius: 14px;
     text-align: center;
     position: relative;
     box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    overflow: hidden;
     color: #333;
-
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.convite.visivel {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
 }
 
 /* ===== Texto ===== */
 .frase { font-style: italic; margin-bottom: 25px; }
-
 .nomes {
     font-family: 'Brush Script MT', cursive;
     font-size: 58px;
@@ -113,7 +92,6 @@ body {
     -webkit-text-fill-color: transparent;
     margin: 15px 0 25px;
 }
-
 .texto { font-size: 17px; margin-bottom: 28px; }
 .data { font-size: 30px; font-weight: bold; }
 .hora { font-style: italic; margin-bottom: 25px; }
@@ -132,11 +110,7 @@ body {
 .botoes button:hover { background: #557a5e; }
 
 /* ===== Rodapé ===== */
-.rodape {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #666;
-}
+.rodape { margin-top: 30px; font-size: 14px; color: #666; }
 
 /* ===== Modais ===== */
 .modal {
@@ -147,7 +121,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
 .modal-content {
     background: white;
     padding: 30px;
@@ -155,7 +128,6 @@ body {
     text-align: center;
     width: 320px;
 }
-
 .modal-content a {
     display: block;
     margin: 10px 0;
@@ -165,14 +137,15 @@ body {
     text-decoration: none;
     border-radius: 25px;
 }
-
 .modal-content .fechar {
-    margin-top: 15px;
+    margin: 15px auto 0;
     padding: 10px 26px;
     background: #ccc;
+    color: #333;
     border: none;
     border-radius: 25px;
     cursor: pointer;
+    display: block;
 }
 </style>
 </head>
@@ -189,25 +162,14 @@ body {
 <div class="convite" id="convite">
     <div class="frase">Certamente,<br>a viagem mais bonita<br>que alguma vez fizemos</div>
     <div class="nomes">Rita & João</div>
-
-    <div class="texto">
-        É com muita felicidade que vos convidamos a celebrar <br>
-        connosco este dia tão especial, o nosso casamento.
-    </div>
-
+    <div class="texto">É com muita felicidade que vos convidamos a celebrar <br> connosco este dia tão especial, o nosso casamento.</div>
     <div class="data">11 . 07 . 2026</div>
     <div class="hora">11:30 horas</div>
-
     <div class="local">
         <strong>Santuário de Nossa Senhora da Nazaré</strong><br>
         |<br>Quinta do Pinheiro, Valado dos Frades
     </div>
-
-    <div class="texto">
-        A receção dos convidados decorrerá no <br>
-        Campo de Futebol do C.D. Garcia pelas 9h30
-    </div>
-
+    <div class="texto">A receção dos convidados decorrerá no <br> Campo de Futebol do C.D. Garcia pelas 9h30</div>
     <div class="botoes">
         <button onclick="abrirRSVP()">💬 Confirmar Presença</button>
         <button onclick="abrirMapas()">📍 Ver Mapas</button>
@@ -243,25 +205,14 @@ body {
 
 <script>
 function abrirConvite() {
-    const envelope = document.querySelector('.envelope-wrapper');
-    const convite = document.getElementById('convite');
-
-    envelope.classList.add('esconder');
-
-    setTimeout(() => {
-        envelope.remove();
-        convite.classList.add('visivel');
-        document.body.style.overflow = 'auto'; // permite scroll no convite
-    }, 600);
+    document.querySelector('.envelope-wrapper').style.display = 'none';
+    document.getElementById('convite').style.display = 'block';
 }
-
 function abrirRSVP() { document.getElementById('rsvp').style.display = 'flex'; }
 function fecharRSVP() { document.getElementById('rsvp').style.display = 'none'; }
-
 function abrirMapas() { document.getElementById('mapas').style.display = 'flex'; }
 function fecharMapas() { document.getElementById('mapas').style.display = 'none'; }
 </script>
 
 </body>
 </html>
-
