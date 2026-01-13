@@ -27,6 +27,12 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
+	opacity: 1;
+    transition: opacity 0.6s ease;
+}
+
+.envelope-wrapper.esconder {
+    opacity: 0;
 }
 
 .envelope {
@@ -80,6 +86,13 @@ body {
     box-shadow: 0 12px 40px rgba(0,0,0,0.12);
     overflow: hidden;
     color: #333;
+	
+	opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.convite.mostrar {
+    opacity: 1;
 }
 
 /* ===== Texto ===== */
@@ -147,6 +160,15 @@ body {
     cursor: pointer;
     display: block;
 }
+/* ===== Ajuste textura papel no mobile ===== 
+@media (max-width: 600px) {
+    .convite {
+        background-size: contain;
+        background-position: top center;
+        background-repeat: no-repeat;
+    }
+}*/
+
 </style>
 </head>
 
@@ -205,9 +227,22 @@ body {
 
 <script>
 function abrirConvite() {
-    document.querySelector('.envelope-wrapper').style.display = 'none';
-    document.getElementById('convite').style.display = 'block';
+    const envelope = document.querySelector('.envelope-wrapper');
+    const convite = document.getElementById('convite');
+
+    envelope.classList.add('esconder');
+
+    setTimeout(() => {
+        envelope.style.display = 'none';
+        convite.style.display = 'block';
+
+        // força reflow para a transição funcionar
+        convite.offsetHeight;
+
+        convite.classList.add('mostrar');
+    }, 600);
 }
+
 function abrirRSVP() { document.getElementById('rsvp').style.display = 'flex'; }
 function fecharRSVP() { document.getElementById('rsvp').style.display = 'none'; }
 function abrirMapas() { document.getElementById('mapas').style.display = 'flex'; }
