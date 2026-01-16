@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rita & João | Confirmação de Presença</title>
 <style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/css/intlTelInput.css">
 * { box-sizing: border-box; margin:0; padding:0; font-family:'Georgia', serif; }
 body { background-color: #f6f5ef; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; opacity:0; transition: opacity 0.8s ease; }
 
@@ -90,7 +91,7 @@ button.voltar:hover { background:#6b8f71; color:white; }
     </form>
   </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/intlTelInput.min.js"></script>
 <script>
 // ===== Fade-in =====
 window.addEventListener("DOMContentLoaded", () => {
@@ -272,9 +273,14 @@ function voltarAoEnvelope(){
     }, 2000); // tempo do fade
   }, 100); // pequeno delay após fechar o alert
 }
+intlTelInput(document.querySelector("#contacto"), {
+    initialCountry: "pt",
+    separateDialCode: true
+  });
 </script>
 </body>
 </html>
+
 
 
 
