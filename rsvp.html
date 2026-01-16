@@ -129,6 +129,12 @@ function atualizarCampos() {
       c.classList.add("hidden");
       if(c.tagName !== "LABEL") c.required = false;
     } else {
+	  // Campo "Leva crianças" (criancas) só aparece se numPessoas > 1
+      if(c === criancas || (c.tagName === "LABEL" && c.htmlFor === "criancas")) {
+        const mostrar = numPessoas > 1;
+        c.classList.toggle("hidden", !mostrar);
+        if(c.tagName !== "LABEL") c.required = mostrar;
+      }
       // Idades das crianças
       if(c === idades || (c.tagName === "LABEL" && c.htmlFor === "idadesCriancas")){
         const obrigatorio = criancas.value === "Sim";
@@ -265,6 +271,7 @@ intlTelInput(document.querySelector("#contacto"), {
 </script>
 </body>
 </html>
+
 
 
 
