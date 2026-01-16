@@ -170,14 +170,20 @@ form.addEventListener("submit", async function(e){
   const formData = Object.fromEntries(new FormData(form));
   const numPessoas = parseInt(formData.num_pessoas)||1;
   
-  if(formData.presenca === "Sim") {
+  //if(formData.presenca === "Sim") {
     const numeroInternacional = iti.getNumber(); // +351912345678
     const dadosPais = iti.getSelectedCountryData();
 
 	formData.prefixo = `+${dadosPais.dialCode}`; // +351
     formData.contacto_completo = numeroInternacional;
 	formData.contacto = numeroInternacional.replace(/\D/g, '').slice(dadosPais.dialCode.length);
-  }
+	const duplicado = await verificarDuplicado(formData.contacto_completo);
+	if (duplicado) {
+	  setLoading(false);
+	  alert("Este contacto já confirmou presença.");
+	  return;
+	}
+  //}
   
   if(formData.presenca !== "Sim") {
     // Remove todos os campos extras se a pessoa não vai
@@ -189,12 +195,6 @@ form.addEventListener("submit", async function(e){
     delete formData.restricoes; // se quiser opcional
 	//delete formData.prefixo;
   } else {
-	const duplicado = await verificarDuplicado(formData.contacto_completo);
-	if (duplicado) {
-	  setLoading(false);
-	  alert("Este contacto já confirmou presença.");
-	  return;
-	}
     //formData.contacto = normalizarContacto(formData.contacto);
     
     // Validar nomes se houver acompanhantes
@@ -281,6 +281,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
