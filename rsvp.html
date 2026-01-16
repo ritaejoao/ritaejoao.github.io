@@ -236,9 +236,14 @@ form.addEventListener("submit", async function(e){
   try {
     const resp = await fetch("https://script.google.com/macros/s/AKfycbwG3ZMqpyzV1D0HPoyD-3nYsiw9n-A4uuM29QbrTiRaVOchNkipKyHYUtuGhqUWk3DAbg/exec", {
       method:"POST",
+	  headers: {
+      	"Content-Type": "application/json"
+      },
       body: JSON.stringify(formData)
     });
-    const result = await resp.json();
+	const texto = await resp.text();
+	console.log("Resposta crua:", texto);
+    //const result = await resp.json();
     /*if(result.status==="ok"){
       //msg.style.color="green";
       //msg.textContent="Confirmação registada";
@@ -250,7 +255,7 @@ form.addEventListener("submit", async function(e){
       msg.style.color="red";
       msg.textContent=result.message || "Erro ao enviar";
     }*/
-	if(result.status==="duplicate") { alert("Contacto já registado"); return; }
+	/*if(result.status==="duplicate") { alert("Contacto já registado"); return; }
     if(result.status==="error") { alert(result.message||"Erro ao enviar"); return; }
     if(result.status==="ok") { alert("Confirmação registada! A redirecionar..."); 
 	form.reset(); 
@@ -262,7 +267,35 @@ form.addEventListener("submit", async function(e){
     //msg.textContent="Erro ao enviar";
 	alert("Erro ao enviar");
     console.error(err);
+  }*/
+  let result;
+  try {
+    result = JSON.parse(texto);
+  } catch {
+    throw new Error("Resposta inválida do servidor");
   }
+
+  if (result.status === "duplicate") {
+    alert("Contacto já registado");
+    return;
+  }
+
+  if (result.status === "error") {
+    alert(result.message || "Erro ao enviar");
+    return;
+  }
+
+  if (result.status === "ok") {
+    alert("Confirmação registada! A redirecionar...");
+    form.reset();
+    atualizarCampos();
+    voltarAoEnvelope();
+  }
+
+} catch (err) {
+  console.error(err);
+  alert("Erro de comunicação com o servidor");
+}
 });
 
 // ===== Voltar =====
@@ -285,6 +318,7 @@ intlTelInput(document.querySelector("#contacto"), {
 </script>
 </body>
 </html>
+
 
 
 
