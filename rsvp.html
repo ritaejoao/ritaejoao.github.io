@@ -129,6 +129,7 @@ function atualizarCampos() {
     if(presenca.value === "Não") {
       c.classList.add("hidden");
       indicativoContainer?.classList.add("hidden");
+      if (indicativoContainer.tagName !== "LABEL") indicativoContainer.required=false;
       if(c.tagName !== "LABEL") c.required = false;
     } else {
 	  // Campo "Leva crianças" (criancas) só aparece se numPessoas > 1
