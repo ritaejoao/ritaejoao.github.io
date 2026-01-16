@@ -136,7 +136,7 @@ function atualizarCampos() {
         if(c.tagName !== "LABEL") c.required = mostrar;
       }
       // Idades das crianças
-      if(c === idades || (c.tagName === "LABEL" && c.htmlFor === "idadesCriancas")){
+      else if(c === idades || (c.tagName === "LABEL" && c.htmlFor === "idadesCriancas")){
         const obrigatorio = criancas.value === "Sim";
         c.classList.toggle("hidden", !obrigatorio);
         if(c.tagName !== "LABEL") c.required = obrigatorio;
