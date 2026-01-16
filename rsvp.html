@@ -178,7 +178,7 @@ formData.prefixo = `+${dadosPais.dialCode}`;
 formData.contacto_completo = numeroInternacional;
 
 // ✅ Verificar duplicado no backend
-const resp = await fetch("https://script.google.com/macros/s/AKfycbz03jy2abbseKEtM5eD5fcCpC3JSTWMOiBNq5mw-yJxbmENppj-wzOdl22gM8X8INpYKg/exec", {
+const resp = await fetch("https://script.google.com/macros/s/AKfycbycgzb0uNvZWWKMVm1DFHMbZF5lCUiS_27JENK9wX79U2IENN_yGHfcJS-7LyLaco73kA/exec", {
   method: "POST",
   body: JSON.stringify({ contacto_completo: formData.contacto_completo })
 });
@@ -218,7 +218,7 @@ if (result.status === "duplicate") {
 
   // Enviar para Google Apps Script
   try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbz03jy2abbseKEtM5eD5fcCpC3JSTWMOiBNq5mw-yJxbmENppj-wzOdl22gM8X8INpYKg/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbycgzb0uNvZWWKMVm1DFHMbZF5lCUiS_27JENK9wX79U2IENN_yGHfcJS-7LyLaco73kA/exec", {
       method:"POST",
       body: JSON.stringify(formData)
     });
@@ -291,6 +291,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
