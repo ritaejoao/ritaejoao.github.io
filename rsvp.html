@@ -77,12 +77,14 @@ button.voltar:hover { background:#6b8f71; color:white; }
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/intlTelInput.min.js"></script>
 <script>
 // ===== Fade-in =====
 /*window.addEventListener("DOMContentLoaded", () => {
   document.body.style.opacity = 0;
   setTimeout(() => { document.body.style.opacity = 1; }, 50);
 });*/
+let iti;
 document.addEventListener("DOMContentLoaded", () => {
   iti = intlTelInput(document.querySelector("#contacto"), {
     initialCountry: "pt",
@@ -102,7 +104,6 @@ const idades = document.getElementById("idadesCriancas");
 const msg = document.getElementById("msg");
 const numPessoasInput = document.getElementById("num_pessoas");
 const nomesInput = document.getElementById("nomes");
-let iti;
 
 /*function atualizarCampos() {
   const numPessoas = parseInt(numPessoasInput.value) || 1;
@@ -328,6 +329,7 @@ function voltarAoEnvelope(){
 </script>
 </body>
 </html>
+
 
 
 
