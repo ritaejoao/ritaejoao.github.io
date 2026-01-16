@@ -187,8 +187,15 @@ form.addEventListener("submit", async function(e){
   const numPessoas = parseInt(formData.num_pessoas)||1;
   
   if(formData.presenca === "Sim") {
-	formData.contacto = (formData.contacto || "");
-	formData.contacto = formData.contacto.replace(/\D/g,''); // remove tudo que não é dígito
+	/*formData.contacto = (formData.contacto || "");
+	formData.contacto = formData.contacto.replace(/\D/g,''); // remove tudo que não é dígito*/
+	const numeroNacional = iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL);
+    const numeroInternacional = iti.getNumber(); // +351912345678
+    const dadosPais = iti.getSelectedCountryData();
+
+	formData.prefixo = `+${dadosPais.dialCode}`; // +351
+    formData.contacto = numeroNacional.replace(/\D/g, '');
+    formData.contacto_completo = numeroInternacional.replace(/\s/g, '');
   }
   
   if(formData.presenca !== "Sim") {
@@ -199,16 +206,20 @@ form.addEventListener("submit", async function(e){
     delete formData.nomes;
     delete formData.num_pessoas;
     delete formData.restricoes; // se quiser opcional
-	delete formData.prefixo;
+	//delete formData.prefixo;
   } else {
     // Presença = Sim → validar contacto
-    if(!validarContacto(formData.contacto)){
+    /*if(!validarContacto(formData.contacto)){
       //msg.style.color="red";
       //msg.textContent="Contacto inválido. Use + ou 00 para internacional.";
 	  alert("Contacto inválido. Use um formato válido com prefixo.");
       return;
-    }
-    formData.contacto = normalizarContacto(formData.contacto);
+    }*/
+	if (!iti.isValidNumber()) {
+	  alert("Contacto inválido. Verifique o número.");
+	  return;
+	}
+    //formData.contacto = normalizarContacto(formData.contacto);
     
     // Validar nomes se houver acompanhantes
     if(numPessoas > 1){
@@ -274,6 +285,7 @@ intlTelInput(document.querySelector("#contacto"), {
 </script>
 </body>
 </html>
+
 
 
 
