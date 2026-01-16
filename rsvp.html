@@ -123,7 +123,8 @@ const nomesInput = document.getElementById("nomes");
 }*/
 function atualizarCampos() {
   const numPessoas = parseInt(numPessoasInput.value) || 1;
-
+  // Seleciona o container do intl-tel-input
+  const indicativoContainer = document.querySelector("#contacto")?.closest(".iti");
   camposExtras.forEach(c => {
     if(presenca.value === "Não") {
       c.classList.add("hidden");
@@ -147,6 +148,15 @@ function atualizarCampos() {
         c.classList.toggle("hidden", ocultar);
         if(c.tagName !== "LABEL") c.required = !ocultar;
       } 
+      else if(c.matches("#contacto")) {
+        if(presenca.value === "Não") {
+           indicativoContainer.classList.add("hidden");
+          c.required = false;
+      } else {
+          indicativoContainer.classList.remove("hidden");
+          c.required = true;
+      }
+      }
       else {
         c.classList.remove("hidden");
         if(c.name === "num_pessoas" || c.name === "criancas") c.required = true;
