@@ -273,7 +273,7 @@ form.addEventListener("submit", async function(e){
 
     formData.prefixo = `+${dadosPais.dialCode}`;
     formData.contacto_completo = numeroInternacional;
-    formData.contacto = numeroInternacional.replace(/\D/g,'').slice(dadosPais.dialCode.length);
+    //formData.contacto = numeroInternacional.replace(/\D/g,'').slice(dadosPais.dialCode.length);
 
     // 2️⃣ Validar nomes se houver acompanhantes
     if(numPessoas > 1){
@@ -357,6 +357,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
