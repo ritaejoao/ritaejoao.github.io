@@ -79,9 +79,18 @@ button.voltar:hover { background:#6b8f71; color:white; }
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/intlTelInput.min.js"></script>
 <script>
 // ===== Fade-in =====
-window.addEventListener("DOMContentLoaded", () => {
+/*window.addEventListener("DOMContentLoaded", () => {
   document.body.style.opacity = 0;
   setTimeout(() => { document.body.style.opacity = 1; }, 50);
+});*/
+document.addEventListener("DOMContentLoaded", () => {
+  iti = intlTelInput(document.querySelector("#contacto"), {
+    initialCountry: "pt",
+    separateDialCode: true
+  });
+  document.body.style.opacity = 0;
+  setTimeout(() => { document.body.style.opacity = 1; }, 50);
+  atualizarCampos();
 });
 
 // ===== Campos dinâmicos =====
@@ -93,6 +102,7 @@ const idades = document.getElementById("idadesCriancas");
 const msg = document.getElementById("msg");
 const numPessoasInput = document.getElementById("num_pessoas");
 const nomesInput = document.getElementById("nomes");
+let iti;
 
 /*function atualizarCampos() {
   const numPessoas = parseInt(numPessoasInput.value) || 1;
@@ -311,13 +321,14 @@ function voltarAoEnvelope(){
     }, 2000); // tempo do fade
   }, 100); // pequeno delay após fechar o alert
 }
-intlTelInput(document.querySelector("#contacto"), {
+/*intlTelInput(document.querySelector("#contacto"), {
     initialCountry: "pt",
     separateDialCode: true
-  });
+  });*/
 </script>
 </body>
 </html>
+
 
 
 
