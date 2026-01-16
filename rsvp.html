@@ -247,9 +247,6 @@ form.addEventListener("submit", async function(e){
   try {
     const resp = await fetch("https://script.google.com/macros/s/AKfycbz03jy2abbseKEtM5eD5fcCpC3JSTWMOiBNq5mw-yJxbmENppj-wzOdl22gM8X8INpYKg/exec", {
       method:"POST",
-	  headers: {
-      	"Content-Type": "application/json"
-      },
       body: JSON.stringify(formData)
     });
 	const texto = await resp.text();
@@ -329,6 +326,7 @@ function voltarAoEnvelope(){
 </script>
 </body>
 </html>
+
 
 
 
