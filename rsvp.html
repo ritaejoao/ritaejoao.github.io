@@ -231,7 +231,11 @@ form.addEventListener("submit", async function(e){
     }*/
 	if(result.status==="duplicate") { alert("Contacto já registado"); return; }
     if(result.status==="error") { alert(result.message||"Erro ao enviar"); return; }
-    if(result.status==="ok") { alert("Confirmação registada"); form.reset(); atualizarCampos(); }
+    if(result.status==="ok") { alert("Confirmação registada"); 
+	form.reset(); 
+	atualizarCampos(); 
+	voltarAoEnvelope();
+	}
   } catch(err){
     //msg.style.color="red";
     //msg.textContent="Erro ao enviar";
@@ -245,6 +249,11 @@ function voltarAoConvite(){
 	document.body.style.opacity=0; 
 	setTimeout(()=>{window.location.href="index.html#convite";},1000);
 }
+function voltarAoEnvelope(){
+	document.body.style.opacity=0; 
+	setTimeout(()=>{window.location.href="index.html";},3000);
+}
 </script>
 </body>
 </html>
+
