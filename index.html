@@ -75,7 +75,8 @@ body {
     display: none;
     max-width: 760px;
     margin: 30px auto;
-    background: url('textura-papel.png');
+    //background: url('textura-papel.png');
+	background-image: url('convite-desktop.png'); /* DESKTOP/TABLET */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -109,6 +110,7 @@ body {
 .data { font-size: 30px; font-weight: bold; }
 .hora { font-style: italic; margin-bottom: 25px; }
 .local { margin-bottom: 25px; }
+.pequeno {font-size: 17px; margin-bottom: 28px; }
 
 /* ===== Botões ===== */
 .botoes button {
@@ -160,14 +162,40 @@ body {
     cursor: pointer;
     display: block;
 }
-/* ===== Ajuste textura papel no mobile ===== 
+/* Transição de página */
+body {
+    opacity: 1;
+    transition: opacity 0.8s ease;
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+/* ===== Convite Mobile ===== */
 @media (max-width: 600px) {
     .convite {
-        background-size: contain;
+        background-image: url('convite-mobile.png'); /* SMARTPHONE */
+        background-size: cover;
         background-position: top center;
         background-repeat: no-repeat;
+
+        padding: 90px 25px 70px; /* espaço para a imagem */
+        margin: 15px;
     }
-}*/
+	.frase { font-style: italic; margin-bottom: 25px; }
+    .nomes {
+        font-size: 46px;
+    }
+
+    .data {
+        font-size: 40px;
+    }
+	.texto { font-size: 17px; margin-bottom: 28px; }
+	.hora { font-size: 20px ;font-style: italic; margin-bottom: 28px; }
+	.local { font-size: 17px ;margin-bottom: 35px; }
+	.pequeno { font-size: 17px; margin-bottom: 28px; }
+}
 
 </style>
 </head>
@@ -184,16 +212,16 @@ body {
 <div class="convite" id="convite">
     <div class="frase">Certamente,<br>a viagem mais bonita<br>que alguma vez fizemos</div>
     <div class="nomes">Rita & João</div>
-    <div class="texto">É com muita felicidade que vos convidamos a celebrar <br> connosco este dia tão especial, o nosso casamento.</div>
+    <div class="texto">É com muita felicidade que vos convidamos <br> a celebrar connosco este dia tão especial,<br> o nosso casamento.</div>
     <div class="data">11 . 07 . 2026</div>
     <div class="hora">11:30 horas</div>
     <div class="local">
         <strong>Santuário de Nossa Senhora da Nazaré</strong><br>
         |<br>Quinta do Pinheiro, Valado dos Frades
     </div>
-    <div class="texto">A receção dos convidados decorrerá no <br> Campo de Futebol do C.D. Garcia pelas 9h30</div>
+    <div class="pequeno">A receção dos convidados decorrerá no <br> Campo de Futebol do C.D. Garcia pelas 9h30</div>
     <div class="botoes">
-        <button onclick="abrirRSVP()">💬 Confirmar Presença</button>
+        <button onclick="irParaRSVP()">💬 Confirmar Presença</button>
         <button onclick="abrirMapas()">📍 Ver Mapas</button>
     </div>
 
@@ -247,6 +275,24 @@ function abrirRSVP() { document.getElementById('rsvp').style.display = 'flex'; }
 function fecharRSVP() { document.getElementById('rsvp').style.display = 'none'; }
 function abrirMapas() { document.getElementById('mapas').style.display = 'flex'; }
 function fecharMapas() { document.getElementById('mapas').style.display = 'none'; }
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.location.hash === "#convite") {
+        const envelope = document.querySelector('.envelope-wrapper');
+        const convite = document.getElementById('convite');
+
+        envelope.style.display = 'none';
+        convite.style.display = 'block';
+        convite.classList.add('mostrar');
+    }
+});
+function irParaRSVP() {
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+        window.location.href = "rsvp.html";
+    }, 600); // igual ao tempo da transição
+}
+
 </script>
 
 </body>

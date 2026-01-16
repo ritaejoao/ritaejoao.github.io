@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rita & João | Confirmação de Presença</title>
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family:'Georgia', serif; }
+body { background-color: #f6f5ef; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; opacity:0; transition: opacity 0.8s ease; }
+
+.form-card { width:100%; max-width:520px; background-image:url('convite-mobile.png'); background-size:cover; background-position:center; border-radius:18px; padding:80px 45px 50px; box-shadow:0 12px 40px rgba(0,0,0,0.18); position:relative; }
+.form-content { text-align:center; }
+.form-grid { display:grid; grid-template-columns:1fr; gap:12px; margin-top:20px; }
+label { display:block; font-weight:bold; margin-bottom:4px; font-size:14px; color:#333; text-align:left; }
+input, select, textarea { width:100%; padding:12px 14px; border-radius:30px; border:1px solid rgba(0,0,0,0.25); font-family:inherit; font-size:15px; background: rgba(255,255,255,0.85); }
+textarea { resize:none; height:75px; }
+button { cursor:pointer; font-size:16px; padding:12px 0; border-radius:30px; margin-top:8px; }
+button.enviar { background:#6b8f71; color:white; border:none; }
+button.enviar:hover { background:#557a5e; }
+button.voltar { background: rgba(255,255,255,0.75); color:#6b8f71; border:1px solid #6b8f71; }
+button.voltar:hover { background:#6b8f71; color:white; }
+.hidden { display:none; }
+.mensagem { font-size:14px; margin-top:10px; color:green; }
+@media (max-width:600px) { .form-card { padding:110px 25px 50px; } }
+</style>
+</head>
+<body>
+<div class="form-card">
+  <div class="form-content">
+    <h2>Confirmação de Presença</h2>
+    <form id="rsvpForm">
+      <div class="form-grid">
+        <label for="nome">Nome completo</label>
+        <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
+		
+        <label for="presenca">Presença</label>
+        <select name="presenca" id="presenca" required>
+          <option value="Sim" selected>Sim</option>
+          <option value="Não">Não</option>
+        </select>
+		
+		<label for="contacto" class="campo-extra">Contacto</label>
+			<div style="display:flex; gap:8px;">
+			  <select id="prefixo" name="prefixo" required style="width:100px; border-radius:30px; padding:12px 10px; font-family:inherit;" class="campo-extra">
+				<option value="+351" selected>+351</option>
+				<option value="+44">+44</option>
+				<option value="+1">+1</option>
+				<!-- Adicione outros prefixos que desejar -->
+			  </select>
+        <input type="text" name="contacto" id="contacto" placeholder="Contacto" class="campo-extra">
+		</div>
+        <label for="num_pessoas" class="campo-extra">Número de pessoas</label>
+        <input type="number" name="num_pessoas" id="num_pessoas" placeholder="Número de pessoas" min="1" class="campo-extra">
+
+        <label for="nomes" class="campo-extra">Nomes dos acompanhantes</label>
+        <input type="text" name="nomes" id="nomes" placeholder="Nomes separarados por vírgula" class="campo-extra">
+
+        <label for="criancas" class="campo-extra">Leva crianças?</label>
+        <select name="criancas" id="criancas" class="campo-extra">
+          <option value="Sim">Sim</option>
+          <option value="Não">Não</option>
+        </select>
+
+        <label for="idadesCriancas" class="campo-extra">Idade(s) da(s) criança(s)</label>
+        <input type="text" name="idades_criancas" id="idadesCriancas" placeholder="Idade(s) da(s) criança(s)" class="campo-extra">
+
+        <label for="restricoes" class="campo-extra">Restrições alimentares (opcional)</label>
+        <textarea name="restricoes" id="restricoes" placeholder="Restrições alimentares (opcional)" class="campo-extra"></textarea>
+
+        <button type="submit" class="enviar">Enviar confirmação</button>
+        <button type="button" class="voltar" onclick="voltarAoConvite()">← Voltar ao convite</button>
+
+        <p class="mensagem" id="msg"></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ===== Fade-in =====
+window.addEventListener("DOMContentLoaded", () => {
+  document.body.style.opacity = 0;
+  setTimeout(() => { document.body.style.opacity = 1; }, 50);
+});
+
+// ===== Campos dinâmicos =====
+const form = document.getElementById("rsvpForm");
+const presenca = document.getElementById("presenca");
+const camposExtras = document.querySelectorAll(".campo-extra");
+const criancas = document.getElementById("criancas");
+const idades = document.getElementById("idadesCriancas");
+const msg = document.getElementById("msg");
+const numPessoasInput = document.getElementById("num_pessoas");
+const nomesInput = document.getElementById("nomes");
+
+/*function atualizarCampos() {
+  const numPessoas = parseInt(numPessoasInput.value) || 1;
+
+  camposExtras.forEach(c => {
+    if(presenca.value === "Não") {
+      c.classList.add("hidden"); 
+	  if(c.tagName!=="LABEL") c.required=false;
+    } else if(presenca.value === "Sim") {
+      // Idades das crianças
+      if(c===idades || (c.tagName==="LABEL" && c.htmlFor==="idadesCriancas")){
+        c.classList.toggle("hidden", criancas.value!=="Sim");
+      }
+      // Nomes acompanhantes
+      else if(c===nomesInput || (c.tagName==="LABEL" && c.htmlFor==="nomes")){
+        const ocultar = numPessoas <=1;
+        c.classList.toggle("hidden", ocultar);
+        if(c.tagName!=="LABEL") c.required = !ocultar;
+      }
+      else {
+        c.classList.remove("hidden");
+        if(c.name==="num_pessoas" || c.name==="criancas") c.required=true;
+      }
+    } else {
+      c.classList.add("hidden"); if(c.tagName!=="LABEL") c.required=false;
+    }
+  });
+}*/
+function atualizarCampos() {
+  const numPessoas = parseInt(numPessoasInput.value) || 1;
+
+  camposExtras.forEach(c => {
+    if(presenca.value === "Não") {
+      c.classList.add("hidden");
+      if(c.tagName !== "LABEL") c.required = false;
+    } else {
+      // Idades das crianças
+      if(c === idades || (c.tagName === "LABEL" && c.htmlFor === "idadesCriancas")){
+        const obrigatorio = criancas.value === "Sim";
+        c.classList.toggle("hidden", !obrigatorio);
+        if(c.tagName !== "LABEL") c.required = obrigatorio;
+      }
+      // Nomes acompanhantes
+      else if(c === nomesInput || (c.tagName === "LABEL" && c.htmlFor === "nomes")){
+        const ocultar = numPessoas <=1;
+        c.classList.toggle("hidden", ocultar);
+        if(c.tagName !== "LABEL") c.required = !ocultar;
+      } 
+      else {
+        c.classList.remove("hidden");
+        if(c.name === "num_pessoas" || c.name === "criancas") c.required = true;
+      }
+    }
+  });
+}
+
+presenca.addEventListener("change", atualizarCampos);
+criancas.addEventListener("change", atualizarCampos);
+numPessoasInput.addEventListener("input", atualizarCampos);
+document.addEventListener("DOMContentLoaded", atualizarCampos);
+
+// ===== Validação nomes =====
+function validarNomesComAcompanhantes(nomePrincipal, nomesAcompanhantes, numPessoas){
+  if(numPessoas <= 1) return true;
+  const arr = nomesAcompanhantes.split(",").map(n=>n.trim()).filter(n=>n.length>0);
+  return (1 + arr.length) === numPessoas;
+}
+
+// ===== Validação contacto =====
+function validarContacto(tel){
+  return /^(\+|00)?\d{6,15}$/.test(tel.replace(/[\s\-()]/g,''));
+}
+function normalizarContacto(tel){ 
+	return tel.replace(/\D/g,''); 
+}
+
+// ===== Submit =====
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+  msg.textContent="";
+
+  const formData = Object.fromEntries(new FormData(form));
+  const numPessoas = parseInt(formData.num_pessoas)||1;
+  
+  if(formData.presenca === "Sim") {
+	formData.contacto = (formData.contacto || "");
+	formData.contacto = formData.contacto.replace(/\D/g,''); // remove tudo que não é dígito
+  }
+  
+  if(formData.presenca !== "Sim") {
+    // Remove todos os campos extras se a pessoa não vai
+    delete formData.contacto;
+    delete formData.criancas;
+    delete formData.idades_criancas;
+    delete formData.nomes;
+    delete formData.num_pessoas;
+    delete formData.restricoes; // se quiser opcional
+	delete formData.prefixo;
+  } else {
+    // Presença = Sim → validar contacto
+    if(!validarContacto(formData.contacto)){
+      //msg.style.color="red";
+      //msg.textContent="Contacto inválido. Use + ou 00 para internacional.";
+	  alert("Contacto inválido. Use um formato válido com prefixo.");
+      return;
+    }
+    formData.contacto = normalizarContacto(formData.contacto);
+    
+    // Validar nomes se houver acompanhantes
+    if(numPessoas > 1){
+      if(!validarNomesComAcompanhantes(formData.nome, formData.nomes, numPessoas)){
+        //msg.style.color="red";
+        //msg.textContent=`O número de nomes não corresponde ao número de pessoas (${numPessoas}). O seu nome principal conta como 1 pessoa.`;
+        alert(`O número de nomes não corresponde ao número de pessoas (${numPessoas}). O seu nome principal conta como 1 pessoa.`);
+		return;
+      }
+    }
+  }
+
+  // Enviar para Google Apps Script
+  try {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbxLgr8JUYSO7_tBPkZ9_5HndW853eBNn1IEc8JlWzMz3iCzZzftRdWle2l__DfqHSgM9w/exec", {
+      method:"POST",
+      body: JSON.stringify(formData)
+    });
+    const result = await resp.json();
+    /*if(result.status==="ok"){
+      //msg.style.color="green";
+      //msg.textContent="Confirmação registada";
+	  alert("Confirmação registada! A redirecionar...");
+      form.reset();
+      atualizarCampos();
+      setTimeout(()=>{window.location.href="index.html";},3000);
+    } else {
+      msg.style.color="red";
+      msg.textContent=result.message || "Erro ao enviar";
+    }*/
+	if(result.status==="duplicate") { alert("Contacto já registado"); return; }
+    if(result.status==="error") { alert(result.message||"Erro ao enviar"); return; }
+    if(result.status==="ok") { alert("Confirmação registada"); form.reset(); atualizarCampos(); }
+  } catch(err){
+    //msg.style.color="red";
+    //msg.textContent="Erro ao enviar";
+	alert("Erro ao enviar");
+    console.error(err);
+  }
+});
+
+// ===== Voltar =====
+function voltarAoConvite(){
+	document.body.style.opacity=0; 
+	setTimeout(()=>{window.location.href="index.html#convite";},1000);
+}
+</script>
+</body>
+</html>
