@@ -1,0 +1,123 @@
+* { 
+	box-sizing: border-box; 
+	margin:0; 
+	padding:0; 
+	font-family:'Georgia', serif; 
+}
+
+body { 
+	background-color: #f6f5ef; 
+	display:flex; 
+	justify-content:center; 
+	align-items:center; 
+	min-height:100vh; 
+	padding:20px; 
+	opacity:0; 
+	transition: opacity 0.8s ease; 
+}
+
+.form-card { 
+	width:100%; 
+	max-width:520px; 
+	background-image:url('convite-mobile.png'); 
+	background-size:cover; 
+	background-position:center; 
+	border-radius:18px; 
+	padding:80px 45px 50px; 
+	box-shadow:0 12px 40px rgba(0,0,0,0.18); 
+	position:relative; 
+}
+
+.form-content { 
+	text-align:center; 
+}
+
+.form-grid { 
+	display:grid; 
+	grid-template-columns:1fr; 
+	gap:4px; 
+	margin-top:20px; 
+}
+
+label { 
+	display:block; 
+	font-weight:bold; 
+	margin-bottom:0; 
+	font-size:14px; 
+	color:#333; 
+	text-align:left; 
+}
+
+input, select, textarea { 
+	width:100%; 
+	padding:12px 14px; 
+	border-radius:30px; 
+	border:1px solid rgba(0,0,0,0.25); 
+	font-family:inherit; 
+	font-size:15px; 
+	background: rgba(255,255,255,0.85); 
+	margin-bottom: 10px;
+}
+
+textarea { 
+	resize:none; 
+	height:75px; 
+}
+
+button { 
+	margin: 10px;
+    padding: 13px 28px;
+    background: #6b8f71;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+	font-size:15px; 
+	gap: 0;
+}
+
+button.enviar { 
+	background:#6b8f71; 
+	color: white; 
+	border:none; 
+	margin-bottom:0;
+}
+
+button.enviar:hover { 
+	background:#557a5e; 
+}
+
+button.voltar { 
+	background: rgba(255,255,255,0.75); 
+	color:#6b8f71; 
+	border:1px solid #6b8f71; 
+	margin-top:3px;
+}
+
+button.voltar:hover { 
+	background:#6b8f71; 
+	color:white; 
+}
+
+.hidden { 
+	display:none; 
+}
+
+.mensagem { 
+	font-size:14px; 
+	margin-top:10px; 
+	color:green; 
+}
+
+/* Remove sombra e fundo da bandeira */
+.iti__selected-flag {
+  /*box-shadow: none !important;
+  background: transparent !important;*/
+  border-radius:30px 0 0 30px;
+}
+
+.pequeno {
+	margin-top: 10px;
+}
+
+@media (max-width:600px) { .form-card { padding:110px 25px 50px; } }

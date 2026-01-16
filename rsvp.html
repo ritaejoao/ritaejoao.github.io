@@ -5,33 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/css/intlTelInput.css">
 <title>Rita & João | Confirmação de Presença</title>
-<style>
-* { box-sizing: border-box; margin:0; padding:0; font-family:'Georgia', serif; }
-body { background-color: #f6f5ef; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; opacity:0; transition: opacity 0.8s ease; }
-
-.form-card { width:100%; max-width:520px; background-image:url('convite-mobile.png'); background-size:cover; background-position:center; border-radius:18px; padding:80px 45px 50px; box-shadow:0 12px 40px rgba(0,0,0,0.18); position:relative; }
-.form-content { text-align:center; }
-.form-grid { display:grid; grid-template-columns:1fr; gap:12px; margin-top:20px; }
-label { display:block; font-weight:bold; margin-bottom:4px; font-size:14px; color:#333; text-align:left; }
-input, select, textarea { width:100%; padding:12px 14px; border-radius:30px; border:1px solid rgba(0,0,0,0.25); font-family:inherit; font-size:15px; background: rgba(255,255,255,0.85); }
-textarea { resize:none; height:75px; }
-button { cursor:pointer; font-size:16px; padding:12px 0; border-radius:30px; margin-top:8px; }
-button.enviar { background:#6b8f71; color:white; border:none; }
-button.enviar:hover { background:#557a5e; }
-button.voltar { background: rgba(255,255,255,0.75); color:#6b8f71; border:1px solid #6b8f71; }
-button.voltar:hover { background:#6b8f71; color:white; }
-.hidden { display:none; }
-.mensagem { font-size:14px; margin-top:10px; color:green; }
-/* Remove sombra e fundo da bandeira */
-.iti__selected-flag {
-  /*box-shadow: none !important;
-  background: transparent !important;*/
-  border-radius:30px 0 0 30px;
-}
-
-@media (max-width:600px) { .form-card { padding:110px 25px 50px; } }
-</style>
+<link rel="stylesheet" href="style_rsvp.css">
 </head>
+
 <body>
 <div class="form-card">
   <div class="form-content">
@@ -49,7 +25,13 @@ button.voltar:hover { background:#6b8f71; color:white; }
 		
 		<label for="contacto" class="campo-extra">Contacto</label>
         <input type="tel" name="contacto" id="contacto" placeholder="Contacto" class="campo-extra">
-		  
+		
+		<label for="pequenoCafe" class="campo-extra pequeno">Pequeno-almoço</label>
+		<select name="pequeno_cafe" id="pequenoCafe" class="campo-extra">
+		  <option value="Sim" selected>Sim</option>
+		  <option value="Não">Não</option>
+		</select>
+		
         <label for="num_pessoas" class="campo-extra">Número de pessoas</label>
         <input type="number" value="1" name="num_pessoas" id="num_pessoas" placeholder="Número de pessoas" min="1" class="campo-extra">
 
@@ -79,11 +61,6 @@ button.voltar:hover { background:#6b8f71; color:white; }
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/intlTelInput.min.js"></script>
 <script>
-// ===== Fade-in =====
-/*window.addEventListener("DOMContentLoaded", () => {
-  document.body.style.opacity = 0;
-  setTimeout(() => { document.body.style.opacity = 1; }, 50);
-});*/
 let iti;
 document.addEventListener("DOMContentLoaded", () => {
   iti = intlTelInput(document.querySelector("#contacto"), {
@@ -112,7 +89,7 @@ function atualizarCampos() {
   camposExtras.forEach(c => {
     if(presenca.value === "Não") {
       c.classList.add("hidden");
-      indicativoContainer?.classList.add("hidden");
+      indicativoContainer.classList.add("hidden");
       if(c.tagName !== "LABEL") c.required = false;
     } else {
 	  // Campo "Leva crianças" (criancas) só aparece se numPessoas > 1
@@ -132,11 +109,12 @@ function atualizarCampos() {
         const ocultar = numPessoas <=1;
         c.classList.toggle("hidden", ocultar);
         if(c.tagName !== "LABEL") c.required = !ocultar;
-      } 
+      }
       else {
         c.classList.remove("hidden");
-		indicativoContainer?.classList.remove("hidden");
+		indicativoContainer.classList.remove("hidden");
         if(c.name === "num_pessoas" || c.name === "criancas") c.required = true;
+		if(c.tagName !== "LABEL") c.required = (c.name === "pequeno_cafe") ? true : c.required;
       }
     }
   });
@@ -154,105 +132,6 @@ function validarNomesComAcompanhantes(nomePrincipal, nomesAcompanhantes, numPess
   return (1 + arr.length) === numPessoas;
 }
 
-// ===== Validação contacto =====
-function validarContacto(tel){
-  return /^(\+|00)?\d{6,15}$/.test(tel.replace(/[\s\-()]/g,''));
-}
-function normalizarContacto(tel){ 
-	return tel.replace(/\D/g,''); 
-}
-
-// ===== Submit =====
-/*form.addEventListener("submit", async function(e){
-  e.preventDefault();
-  msg.textContent="";
-
-  const formData = Object.fromEntries(new FormData(form));
-  const numPessoas = parseInt(formData.num_pessoas)||1;
-  
-  //if(formData.presenca === "Sim") {
-  const dadosPais = iti.getSelectedCountryData();
-  const numeroInternacional = iti.getNumber();
-
-formData.prefixo = `+${dadosPais.dialCode}`;
-formData.contacto_completo = numeroInternacional;
-
-// ✅ Verificar duplicado no backend
-const resp = await fetch("https://script.google.com/macros/s/AKfycbyOWLh8rQ0ul5SNT5XRFwgUr_WkerkJKQg4oGQp9k-6lTIc5zu2Y8gkNF3c1CIZIdEuzA/exec", {
-  method: "POST",
-  body: JSON.stringify({ contacto_completo: formData.contacto_completo })
-});
-
-const texto = await resp.text();
-const result = JSON.parse(texto);
-
-if (result.status === "duplicate") {
-  alert("Este contacto já confirmou presença.");
-  return; // bloqueia envio
-}
-
-// 🔹 Se não for duplicado, continua com envio normal
-
-  //}
-  
-  if(formData.presenca !== "Sim") {
-    // Remove todos os campos extras se a pessoa não vai
-    delete formData.contacto;
-    delete formData.criancas;
-    delete formData.idades_criancas;
-    delete formData.nomes;
-    delete formData.num_pessoas;
-    delete formData.restricoes; // se quiser opcional
-	//delete formData.prefixo;
-  } else {
-    //formData.contacto = normalizarContacto(formData.contacto);
-    
-    // Validar nomes se houver acompanhantes
-    if(numPessoas > 1){
-      if(!validarNomesComAcompanhantes(formData.nome, formData.nomes, numPessoas)){
-        alert(`O número de nomes não corresponde ao número de pessoas (${numPessoas}). O seu nome principal conta como 1 pessoa.`);
-		return;
-      }
-    }
-  }
-
-  // Enviar para Google Apps Script
-  try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbyOWLh8rQ0ul5SNT5XRFwgUr_WkerkJKQg4oGQp9k-6lTIc5zu2Y8gkNF3c1CIZIdEuzA/exec", {
-      method:"POST",
-      body: JSON.stringify(formData)
-    });
-	const texto = await resp.text();
-	console.log("Resposta crua:", texto);
-  let result;
-  try {
-    result = JSON.parse(texto);
-  } catch {
-    throw new Error("Resposta inválida do servidor");
-  }
-
-  if (result.status === "duplicate") {
-    alert("Contacto já registado");
-    return;
-  }
-
-  if (result.status === "error") {
-    alert(result.message || "Erro ao enviar");
-    return;
-  }
-
-  if (result.status === "ok") {
-    alert("Confirmação registada! A redirecionar...");
-    form.reset();
-    atualizarCampos();
-    voltarAoEnvelope();
-  }
-
-} catch (err) {
-  console.error(err);
-  alert("Erro de comunicação com o servidor");
-}
-});*/
 form.addEventListener("submit", async function(e){
   e.preventDefault();
   msg.textContent = "";
@@ -272,8 +151,13 @@ form.addEventListener("submit", async function(e){
     const numeroInternacional = iti.getNumber();
 
     formData.prefixo = `+${dadosPais.dialCode}`;
-    formData.contacto_completo = numeroInternacional;
+    formData.contacto_completo = numeroInternacional.replace(/\D/g,''); // remove +, espaços, etc.
     //formData.contacto = numeroInternacional.replace(/\D/g,'').slice(dadosPais.dialCode.length);
+	const existe = await verificarDuplicado(formData.contacto_completo);
+	if(existe){
+	  alert("Este contacto já confirmou presença.");
+	  return; // BLOQUEIA envio
+	}
 
     // 2️⃣ Validar nomes se houver acompanhantes
     if(numPessoas > 1){
@@ -284,10 +168,20 @@ form.addEventListener("submit", async function(e){
       }
     }
   }
+  if(formData.presenca !== "Sim") {
+		delete formData.contacto;
+		delete formData.criancas;
+		delete formData.idades_criancas;
+		delete formData.nomes;
+		delete formData.num_pessoas;
+		delete formData.restricoes;
+		delete formData.prefixo;
+		delete formData.pequeno_cafe; // <- campo novo
+	}
 
   // 3️⃣ Enviar para Apps Script
   try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbyOWLh8rQ0ul5SNT5XRFwgUr_WkerkJKQg4oGQp9k-6lTIc5zu2Y8gkNF3c1CIZIdEuzA/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
       method: "POST",
       body: JSON.stringify(formData)
     });
@@ -335,18 +229,18 @@ function voltarAoEnvelope(){
 }
 async function verificarDuplicado(contactoCompleto) {
   try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbzbYA0XvS1gRPbvt04a5nhCwGUc0PWiOhc25PFnvbtkDq5y2kyFNVSL2QSxEhTu-F-cEQ/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
       method: "POST",
       body: JSON.stringify({
         acao: "verificar",
-        contacto_completo: contactoCompleto
+        contacto_completo: contactoCompleto.replace(/\D/g,'') // normaliza também
       })
     });
 
     const texto = await resp.text();
     const result = JSON.parse(texto);
 
-    return result.exists === true;
+    return result.exists;
 
   } catch (err) {
     console.error(err);
