@@ -56,10 +56,21 @@ button.voltar:hover { background:#6b8f71; color:white; }
         <input type="text" name="nomes" id="nomes" placeholder="Nomes separarados por vírgula" class="campo-extra">
 
         <label for="criancas" class="campo-extra">Leva crianças?</label>
-        <select name="criancas" id="criancas" class="campo-extra">
+        /*<select name="criancas" id="criancas" class="campo-extra">
           <option value="Não">Não</option>
           <option value="Sim">Sim</option>
-        </select>
+        </select>*/
+		  <div class="campo-extra">
+			  <label>
+			    <input type="radio" name="criancas" value="Não" checked>
+			    Não
+			  </label>
+
+			  <label>
+			    <input type="radio" name="criancas" value="Sim">
+			    Sim
+			  </label>
+		</div>
 
         <label for="idadesCriancas" class="campo-extra">Idade(s) da(s) criança(s)</label>
         <input type="text" name="idades_criancas" id="idadesCriancas" placeholder="Idade(s) da(s) criança(s)" class="campo-extra">
@@ -260,6 +271,7 @@ function voltarAoEnvelope(){
 </script>
 </body>
 </html>
+
 
 
 
