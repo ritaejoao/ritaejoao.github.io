@@ -231,7 +231,7 @@ form.addEventListener("submit", async function(e){
     }*/
 	if(result.status==="duplicate") { alert("Contacto já registado"); return; }
     if(result.status==="error") { alert(result.message||"Erro ao enviar"); return; }
-    if(result.status==="ok") { alert("Confirmação registada"); 
+    if(result.status==="ok") { alert("Confirmação registada! A redirecionar..."); 
 	form.reset(); 
 	atualizarCampos(); 
 	voltarAoEnvelope();
@@ -250,10 +250,15 @@ function voltarAoConvite(){
 	setTimeout(()=>{window.location.href="index.html#convite";},1000);
 }
 function voltarAoEnvelope(){
-	document.body.style.opacity=0; 
-	setTimeout(()=>{window.location.href="index.html";},3000);
+	setTimeout(() => {
+    document.body.style.opacity = 0;
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 3000); // tempo do fade
+  }, 100); // pequeno delay após fechar o alert
 }
 </script>
 </body>
 </html>
+
 
