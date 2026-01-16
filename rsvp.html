@@ -76,7 +76,7 @@ button.voltar:hover { background:#6b8f71; color:white; }
     </form>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/utils.js"></script>
 <script>
 // ===== Fade-in =====
 /*window.addEventListener("DOMContentLoaded", () => {
@@ -199,13 +199,13 @@ form.addEventListener("submit", async function(e){
   if(formData.presenca === "Sim") {
 	/*formData.contacto = (formData.contacto || "");
 	formData.contacto = formData.contacto.replace(/\D/g,''); // remove tudo que não é dígito*/
-	const numeroNacional = iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL);
+	//const numeroNacional = iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL);
     const numeroInternacional = iti.getNumber(); // +351912345678
     const dadosPais = iti.getSelectedCountryData();
 
 	formData.prefixo = `+${dadosPais.dialCode}`; // +351
-    formData.contacto = numeroNacional.replace(/\D/g, '');
-    formData.contacto_completo = numeroInternacional.replace(/\s/g, '');
+    formData.contacto_completo = numeroInternacional;
+	formData.contacto = numeroInternacional.replace(/\D/g, '').slice(dadosPais.dialCode.length);
   }
   
   if(formData.presenca !== "Sim") {
@@ -328,6 +328,7 @@ function voltarAoEnvelope(){
 </script>
 </body>
 </html>
+
 
 
 
