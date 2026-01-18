@@ -180,14 +180,15 @@ body.fade-out {
     }
 	.frase { font-style: italic; margin-bottom: 25px; }
     .nomes {
-        font-size: 46px;
+        font-size: 50px;
     }
 
     .data {
-        font-size: 40px;
+        font-size: 30px;
     }
 	.texto { font-size: 17px; margin-bottom: 28px; }
 	.hora { font-size: 20px ;font-style: italic; margin-bottom: 28px; }
 	.local { font-size: 17px ;margin-bottom: 35px; }
 	.pequeno { font-size: 17px; margin-bottom: 28px; }
+
 }
