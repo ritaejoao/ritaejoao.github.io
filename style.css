@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'BrushScriptOpti';
+  src: url('BrushScriptOpti-Regular.woff2') format('woff2'),
+       url('BrushScriptOpti-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* ===== Fundo da página ===== */
@@ -184,4 +191,5 @@ body.fade-out {
 	.pequeno { font-size: 17px; margin-bottom: 28px; }
 
 }
+
 
