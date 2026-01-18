@@ -1,10 +1,11 @@
 @font-face {
-  font-family: 'BrushScriptOpti';
-  src: url('BrushScriptOpti-Regular.woff2') format('woff2'),
-       url('BrushScriptOpti-Regular.woff') format('woff');
+  font-family: 'LT Perfume';
+  src: url('LTPerfume-Regular.woff2') format('woff2'),
+       url('LTPerfume-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* ===== Fundo da página ===== */
@@ -92,8 +93,8 @@ body {
 /* ===== Texto ===== */
 .frase { font-style: italic; margin-bottom: 25px; }
 .nomes {
-    font-family: 'BrushScriptOpti';
-    font-size: 58px;
+    font-family: 'LT Perfume';
+    font-size: 75px;
     background: linear-gradient(45deg, #c9a14a, #f5e29c, #b88a2c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -189,7 +190,4 @@ body.fade-out {
 	.hora { font-size: 20px ;font-style: italic; margin-bottom: 28px; }
 	.local { font-size: 17px ;margin-bottom: 35px; }
 	.pequeno { font-size: 17px; margin-bottom: 28px; }
-
 }
-
-
