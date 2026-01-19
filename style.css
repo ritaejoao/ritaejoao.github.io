@@ -41,7 +41,7 @@ body {
     width: 80px;
     height: 80px;
     position: absolute;
-    top: 55%; /* ajuste fino conforme a imagem */
+    top: 54%; /* ajuste fino conforme a imagem */
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -91,19 +91,20 @@ body {
 }
 
 /* ===== Texto ===== */
-.frase { font-style: italic; margin-bottom: 25px; }
+.frase { font-style: italic; margin-bottom: 25px; font-size: 17px; }
 .nomes {
     font-family: 'LT Perfume';
     font-size: 75px;
     background: linear-gradient(45deg, #c9a14a, #f5e29c, #b88a2c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 15px 0 25px;
+    margin: 15px 0 15px;
+	transform: translateX(-10px);
 }
 .texto { font-size: 17px; margin-bottom: 28px; }
-.data { font-size: 30px; font-weight: bold; }
-.hora { font-style: italic; margin-bottom: 25px; }
-.local { margin-bottom: 25px; }
+.data { font-size: 35px; font-weight: bold; }
+.hora { font-size: 23px; font-style: italic; margin-bottom: 25px; }
+.local { font-size: 18px; margin-bottom: 25px; }
 .pequeno {font-size: 17px; margin-bottom: 28px; }
 
 /* ===== Botões ===== */
@@ -120,7 +121,11 @@ body {
 .botoes button:hover { background: #557a5e; }
 
 /* ===== Rodapé ===== */
-.rodape { margin-top: 30px; font-size: 14px; color: #666; }
+.rodape { 
+	margin-top: 30px; 
+	font-size: 15px; 
+	color: #666; 
+}
 
 /* ===== Modais ===== */
 .modal {
@@ -166,7 +171,9 @@ body {
 body.fade-out {
     opacity: 0;
 }
-
+body.mostrar {
+  opacity: 1;
+}
 /* ===== Convite Mobile ===== */
 @media (max-width: 600px) {
     .convite {
@@ -175,21 +182,21 @@ body.fade-out {
         background-position: top center;
         background-repeat: no-repeat;
 
-        padding: 90px 25px 70px; /* espaço para a imagem */
+        padding: 60px 25px 60px; /* espaço para a imagem */
         margin: 15px;
     }
-	.frase { font-style: italic; margin-bottom: 25px; }
+	.frase { font-style: italic; margin-bottom: 25px; font-size: 17px;}
     .nomes {
-        font-size: 60px;
+        font-size: 67px;
+		transform: translateX(-12px);
     }
 
     .data {
         font-size: 30px;
     }
 	.texto { font-size: 17px; margin-bottom: 28px; }
-	.hora { font-size: 20px ;font-style: italic; margin-bottom: 28px; }
+	.hora { font-size: 19px ;font-style: italic; margin-bottom: 28px; }
 	.local { font-size: 17px ;margin-bottom: 35px; }
 	.pequeno { font-size: 17px; margin-bottom: 28px; }
-
 }
 

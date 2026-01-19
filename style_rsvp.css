@@ -30,6 +30,7 @@ body {
 
 .form-content { 
 	text-align:center; 
+	overflow: auto;
 }
 
 .form-grid { 
@@ -80,7 +81,8 @@ button.enviar {
 	background:#6b8f71; 
 	color: white; 
 	border:none; 
-	margin-bottom:0;
+	margin-bottom:8px;
+    justify-self: center;
 }
 
 button.enviar:hover { 
@@ -91,7 +93,8 @@ button.voltar {
 	background: rgba(255,255,255,0.75); 
 	color:#6b8f71; 
 	border:1px solid #6b8f71; 
-	margin-top:3px;
+	margin-top:8px;
+    justify-self: center;
 }
 
 button.voltar:hover { 
@@ -119,5 +122,8 @@ button.voltar:hover {
 .pequeno {
 	margin-top: 10px;
 }
+h2 {
+	margin-bottom: 27px ;
+}
 
-@media (max-width:600px) { .form-card { padding:110px 25px 50px; } }
+@media (max-width:600px) { .form-card { padding:60px 25px 60px; } }

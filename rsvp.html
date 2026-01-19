@@ -134,8 +134,15 @@ function validarNomesComAcompanhantes(nomePrincipal, nomesAcompanhantes, numPess
 
 form.addEventListener("submit", async function(e){
   e.preventDefault();
-  msg.textContent = "";
+  //msg.textContent = "";
+  // Mostrar loading imediatamente
+  msg.textContent = "⏳ A enviar confirmação…";
+  msg.style.color = "#333";  // cor neutra para loading
 
+  // Desativa o botão para evitar múltiplos cliques
+  const btn = form.querySelector("button.enviar");
+  btn.disabled = true;
+try {
   // 1️⃣ Preparar dados
   const formData = Object.fromEntries(new FormData(form));
 
@@ -144,6 +151,8 @@ form.addEventListener("submit", async function(e){
   if(formData.presenca === "Sim"){
     if(!iti.isValidNumber()){
       alert("Contacto inválido. Verifique o número.");
+	  btn.disabled = false;
+       msg.textContent = "";
       return;
     }
 
@@ -156,6 +165,8 @@ form.addEventListener("submit", async function(e){
 	const existe = await verificarDuplicado(formData.contacto_completo);
 	if(existe){
 	  alert("Este contacto já confirmou presença.");
+	  btn.disabled = false;
+      msg.textContent = "";
 	  return; // BLOQUEIA envio
 	}
 
@@ -164,9 +175,15 @@ form.addEventListener("submit", async function(e){
       const arr = (formData.nomes || "").split(",").map(n=>n.trim()).filter(n=>n.length>0);
       if(1 + arr.length !== numPessoas){
         alert(`O número de nomes não corresponde ao número de pessoas (${numPessoas}).`);
+		btn.disabled = false;
+        msg.textContent = "";
         return;
       }
     }
+	if(numPessoas === 1) {
+	  delete formData.criancas;
+	  delete formData.idades_criancas; // remove também idades, se houver
+	}
   }
   if(formData.presenca !== "Sim") {
 		delete formData.contacto;
@@ -180,7 +197,7 @@ form.addEventListener("submit", async function(e){
 	}
 
   // 3️⃣ Enviar para Apps Script
-  try {
+  
     const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
       method: "POST",
       body: JSON.stringify(formData)
@@ -193,24 +210,39 @@ form.addEventListener("submit", async function(e){
     // 4️⃣ Verificar duplicado
     if(result.status === "duplicate"){
       alert("Este contacto já confirmou presença.");
+	  btn.disabled = false;
+      msg.textContent = "";
       return;
     }
 
     if(result.status === "error"){
       alert(result.message || "Erro ao enviar");
+	  btn.disabled = false;
+       msg.textContent = "";
       return;
     }
 
     if(result.status === "ok"){
-      alert("Confirmação registada! A redirecionar...");
-      form.reset();
-      atualizarCampos();
-      voltarAoEnvelope();
+      //alert("Confirmação registada! A redirecionar...");
+	  if(formData.presenca === "Sim"){
+		msg.textContent = "✅ Confirmação de presença registada!";
+		msg.style.color = "green";
+		form.reset();
+		atualizarCampos();
+		//voltarAoEnvelope();
+		setTimeout(voltarAoEnvelope, 1000);
+	  } else {
+		msg.textContent = "✅ Confirmação de ausência registada!";
+		msg.style.color = "orange";
+		setTimeout(voltarAoEnvelope, 1000);
+	   }
     }
 
   } catch(err){
     console.error(err);
     alert("Erro de comunicação com o servidor");
+	btn.disabled = false;
+    msg.textContent = "";
   }
 });
 
