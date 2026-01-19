@@ -110,6 +110,11 @@ function atualizarCampos() {
         c.classList.toggle("hidden", ocultar);
         if(c.tagName !== "LABEL") c.required = !ocultar;
       }
+	  else if(c === contacto || (c.tagName === "LABEL" && c.htmlFor === "contacto")){
+        const obrigatorio = presenca.value === "Sim";
+        c.classList.toggle("hidden", !obrigatorio);
+        if(c.tagName !== "LABEL") c.required = obrigatorio;
+      }
       else {
         c.classList.remove("hidden");
 		indicativoContainer.classList.remove("hidden");
@@ -283,6 +288,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
