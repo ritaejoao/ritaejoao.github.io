@@ -14,38 +14,38 @@
     <h2>Confirmação de Presença</h2>
     <form id="rsvpForm">
       <div class="form-grid">
-        <label for="nome">Nome completo</label>
-        <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
+        <label for="nome">Nome *</label>
+        <input type="text" name="nome" id="nome" placeholder="Nome" required>
 		
-        <label for="presenca">Presença</label>
+        <label for="presenca">Presença *</label>
         <select name="presenca" id="presenca" required>
           <option value="Sim" selected>Sim</option>
           <option value="Não">Não</option>
         </select>
 		
-		<label for="contacto" class="campo-extra">Contacto</label>
+		<label for="contacto" class="campo-extra">Contacto *</label>
         <input type="tel" name="contacto" id="contacto" placeholder="Contacto" class="campo-extra">
 		
-		<label for="pequenoCafe" class="campo-extra pequeno">Pequeno-almoço</label>
+		<label for="pequenoCafe" class="campo-extra pequeno">Pequeno-almoço *</label>
 		<select name="pequeno_cafe" id="pequenoCafe" class="campo-extra">
 		  <option value="Sim" selected>Sim</option>
 		  <option value="Não">Não</option>
 		</select>
 		
-        <label for="num_pessoas" class="campo-extra">Número de pessoas</label>
+        <label for="num_pessoas" class="campo-extra">Número de pessoas *</label>
         <input type="number" value="1" name="num_pessoas" id="num_pessoas" placeholder="Número de pessoas" min="1" class="campo-extra">
 
-        <label for="nomes" class="campo-extra">Nomes dos acompanhantes</label>
-        <input type="text" name="nomes" id="nomes" placeholder="Nomes separarados por vírgula" class="campo-extra">
+        <label for="nomes" class="campo-extra">Nomes dos acompanhantes *</label>
+        <input type="text" name="nomes" id="nomes" placeholder="ex: Ana, Maria (incluir nomes das crianças)" class="campo-extra">
 
-        <label for="criancas" class="campo-extra">Leva crianças?</label>
+        <label for="criancas" class="campo-extra">Leva crianças? *</label>
         <select name="criancas" id="criancas" class="campo-extra">
           <option value="Não">Não</option>
           <option value="Sim">Sim</option>
         </select>
 
-        <label for="idadesCriancas" class="campo-extra">Idade(s) da(s) criança(s)</label>
-        <input type="text" name="idades_criancas" id="idadesCriancas" placeholder="Idade(s) da(s) criança(s)" class="campo-extra">
+        <label for="idadesCriancas" class="campo-extra">Quantas e qual a idade? *</label>
+        <input type="text" name="idades_criancas" id="idadesCriancas" placeholder="ex: 2 crianças - 4 e 7 anos" class="campo-extra">
 
         <label for="restricoes" class="campo-extra">Restrições alimentares (opcional)</label>
         <textarea name="restricoes" id="restricoes" placeholder="Restrições alimentares (opcional)" class="campo-extra"></textarea>
@@ -288,6 +288,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
