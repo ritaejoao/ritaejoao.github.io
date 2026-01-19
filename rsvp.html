@@ -179,7 +179,7 @@ try {
     if(numPessoas > 1){
       const arr = (formData.nomes || "").split(",").map(n=>n.trim()).filter(n=>n.length>0);
       if(1 + arr.length !== numPessoas){
-        alert(`O número de nomes não corresponde ao número de pessoas (${numPessoas}).`);
+        alert(`O número de nomes não corresponde ao número de pessoas, que são ${numPessoas}.`);
 		btn.disabled = false;
         msg.textContent = "";
         return;
@@ -230,14 +230,14 @@ try {
     if(result.status === "ok"){
       //alert("Confirmação registada! A redirecionar...");
 	  if(formData.presenca === "Sim"){
-		msg.textContent = "✅ Confirmação de presença registada!";
+		msg.textContent = "✅ Obrigado pela confirmação! Vamos fazer a festa juntos!!";
 		msg.style.color = "green";
 		form.reset();
 		atualizarCampos();
 		//voltarAoEnvelope();
 		setTimeout(voltarAoEnvelope, 1000);
 	  } else {
-		msg.textContent = "✅ Confirmação de ausência registada!";
+		msg.textContent = "✅ Agradecemos a confirmação, ainda que seja de ausência. Tudo de bom!";
 		msg.style.color = "orange";
 		setTimeout(voltarAoEnvelope, 1000);
 	   }
@@ -288,6 +288,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
