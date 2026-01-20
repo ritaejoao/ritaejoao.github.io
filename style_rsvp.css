@@ -60,6 +60,11 @@ input, select, textarea {
 	margin-bottom: 10px;
 }
 
+input::placeholder {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
 textarea { 
 	resize:none; 
 	height:75px; 
@@ -125,5 +130,6 @@ button.voltar:hover {
 h2 {
 	margin-bottom: 27px ;
 }
+
 
 @media (max-width:600px) { .form-card { padding:60px 25px 60px; } }
