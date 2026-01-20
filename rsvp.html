@@ -36,7 +36,7 @@
         <input type="number" value="1" name="num_pessoas" id="num_pessoas" placeholder="Número de pessoas" min="1" class="campo-extra">
 
         <label for="nomes" class="campo-extra">Nomes dos acompanhantes *</label>
-        <input type="text" name="nomes" id="nomes" placeholder="ex: Ana, Maria (incluir nomes das crianças)" class="campo-extra">
+        <input type="text" name="nomes" id="nomes" placeholder="Ex: Ana, Maria, (incluir nomes das crianças)" class="campo-extra">
 
         <label for="criancas" class="campo-extra">Leva crianças? *</label>
         <select name="criancas" id="criancas" class="campo-extra">
@@ -45,10 +45,10 @@
         </select>
 
         <label for="idadesCriancas" class="campo-extra">Quantas e qual a idade? *</label>
-        <input type="text" name="idades_criancas" id="idadesCriancas" placeholder="ex: 2 crianças - 4 e 7 anos" class="campo-extra">
+        <input type="text" name="idades_criancas" id="idadesCriancas" placeholder="Ex: 2 crianças - 4 e 7 anos" class="campo-extra">
 
         <label for="restricoes" class="campo-extra">Restrições alimentares (opcional)</label>
-        <textarea name="restricoes" id="restricoes" placeholder="Restrições alimentares (opcional)" class="campo-extra"></textarea>
+        <textarea name="restricoes" id="restricoes" placeholder="Ex: intolerâncias alimentares, dieta, vegetariano " class="campo-extra"></textarea>
 
         <button type="submit" class="enviar">Enviar confirmação</button>
         <button type="button" class="voltar" onclick="voltarAoConvite()">← Voltar ao convite</button>
@@ -288,6 +288,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
