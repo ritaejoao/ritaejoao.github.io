@@ -65,6 +65,11 @@ input::placeholder {
   opacity: 0.6;
 }
 
+label::placeholder {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
 textarea { 
 	resize:none; 
 	height:75px; 
@@ -133,3 +138,4 @@ h2 {
 
 
 @media (max-width:600px) { .form-card { padding:60px 25px 60px; } }
+
