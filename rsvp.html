@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/css/intlTelInput.css">
 <title>Rita & João | Confirmação de Presença</title>
+<!-- reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link rel="stylesheet" href="style_rsvp.css">
 </head>
 
@@ -50,6 +52,9 @@
         <label for="restricoes" class="campo-extra">Restrições alimentares (opcional)</label>
         <textarea name="restricoes" id="restricoes" placeholder="Ex: intolerâncias alimentares, dieta, vegetariano " class="campo-extra"></textarea>
 
+ 		<!-- reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="6LeuRlIsAAAAAKOsYaoDzAm-GAWz09CmocbPOJo0"></div>
+		  
         <button type="submit" class="enviar">Enviar confirmação</button>
         <button type="button" class="voltar" onclick="voltarAoConvite()">← Voltar ao convite</button>
 
@@ -60,13 +65,11 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18/build/js/intlTelInput.min.js"></script>
+
 <script>
 let iti;
 document.addEventListener("DOMContentLoaded", () => {
-  iti = intlTelInput(document.querySelector("#contacto"), {
-    initialCountry: "pt",
-    separateDialCode: true
-  });
+  iti = intlTelInput(document.querySelector("#contacto"), { initialCountry: "pt", separateDialCode: true});
   document.body.style.opacity = 0;
   setTimeout(() => { document.body.style.opacity = 1; }, 50);
   atualizarCampos();
@@ -148,9 +151,15 @@ form.addEventListener("submit", async function(e){
   const btn = form.querySelector("button.enviar");
   btn.disabled = true;
 try {
+  const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      alert("Por favor, confirme que não é um robô.");
+      btn.disabled = false;
+      return;
+    }
   // 1️⃣ Preparar dados
   const formData = Object.fromEntries(new FormData(form));
-
+  formData.recaptcha = recaptchaResponse;
   const numPessoas = parseInt(formData.num_pessoas) || 1;
 
   if(formData.presenca === "Sim"){
@@ -211,7 +220,11 @@ try {
     const texto = await resp.text();
     let result;
     try { result = JSON.parse(texto); } catch { throw new Error("Resposta inválida"); }
-
+	if(result.status === "spam" || !result.status) {
+      alert("Falha na verificação reCAPTCHA. Por favor tente novamente.");
+      btn.disabled = false;
+      return;
+    }
     // 4️⃣ Verificar duplicado
     if(result.status === "duplicate"){
       alert("Este contacto já confirmou presença.");
@@ -288,6 +301,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
