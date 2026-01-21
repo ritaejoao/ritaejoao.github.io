@@ -135,13 +135,6 @@ button.voltar:hover {
 h2 {
 	margin-bottom: 27px ;
 }
-.hp {
-  position: absolute;
-  left: -9999px;
-  height: 0;
-  overflow: hidden;
-}
-
 
 
 @media (max-width:600px) { .form-card { padding:60px 25px 60px; } }

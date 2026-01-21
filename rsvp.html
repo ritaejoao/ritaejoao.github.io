@@ -13,8 +13,6 @@
   <div class="form-content">
     <h2>Confirmação de Presença</h2>
     <form id="rsvpForm">
-	  <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" class="hp">
-	  <input type="hidden" name="startTime" id="startTime">
       <div class="form-grid">
         <label for="nome">Nome *</label>
         <input type="text" name="nome" id="nome" placeholder="Nome" required>
@@ -72,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.style.opacity = 0;
   setTimeout(() => { document.body.style.opacity = 1; }, 50);
   atualizarCampos();
-  document.getElementById("startTime").value = Date.now();
 });
 
 // ===== Campos dinâmicos =====
@@ -141,16 +138,6 @@ function validarNomesComAcompanhantes(nomePrincipal, nomesAcompanhantes, numPess
 }
 
 form.addEventListener("submit", async function(e){
-	  // Honeypot
-	if (form.website && form.website.value !== "") {
-	  return; // spam silencioso
-	}
-  
-  const startTime = Number(form.startTime.value);
-  if (!startTime || Date.now() - startTime < 3000) {
-     return; // bot demasiado rápido
-  }
-  
   e.preventDefault();
   //msg.textContent = "";
   // Mostrar loading imediatamente
@@ -163,7 +150,7 @@ form.addEventListener("submit", async function(e){
 try {
   // 1️⃣ Preparar dados
   const formData = Object.fromEntries(new FormData(form));
-  formData.token = "rsvp-rita-joao-2026";
+
   const numPessoas = parseInt(formData.num_pessoas) || 1;
 
   if(formData.presenca === "Sim"){
@@ -216,7 +203,7 @@ try {
 
   // 3️⃣ Enviar para Apps Script
   
-    const resp = await fetch("https://script.google.com/macros/s/AKfycby91JQ3LKZ_2rnrEeycyLLTGwf5min8KkCurbmQATzarOmHa3GuAELx6VUzBNHCWt-BKw/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
       method: "POST",
       body: JSON.stringify(formData)
     });
@@ -279,24 +266,21 @@ function voltarAoEnvelope(){
 }
 async function verificarDuplicado(contactoCompleto) {
   try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycby91JQ3LKZ_2rnrEeycyLLTGwf5min8KkCurbmQATzarOmHa3GuAELx6VUzBNHCWt-BKw/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
       method: "POST",
       body: JSON.stringify({
         acao: "verificar",
-        contacto_completo: contactoCompleto.replace(/\D/g,''), // normaliza também
-		token: "rsvp-rita-joao-2026",     // 🔐 OBRIGATÓRIO
-        startTime: Date.now() - 5000     // ⏱️ simula humano
+        contacto_completo: contactoCompleto.replace(/\D/g,'') // normaliza também
       })
     });
 
-	if (!resp.ok) throw new Error("Erro HTTP");
     const texto = await resp.text();
     const result = JSON.parse(texto);
 
     return result.exists;
 
   } catch (err) {
-    console.error("Erro verificarDuplicado:", err);
+    console.error(err);
     return false; // em caso de erro, deixa passar
   }
 }
