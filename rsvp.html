@@ -212,7 +212,7 @@ try {
 
   // 3️⃣ Enviar para Apps Script
   
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbwqkWy7F9ba4F89ASpSfuyiRc0yExqIZvgYK4QB-1d1qTA5HNJcxtliSpb2jH2XTX7MJA/exec", {
       method: "POST",
       body: JSON.stringify(formData)
     });
@@ -279,7 +279,7 @@ function voltarAoEnvelope(){
 }
 async function verificarDuplicado(contactoCompleto) {
   try {
-    const resp = await fetch("https://script.google.com/macros/s/AKfycbxZw0jnLsjZPQg0dSPid8kNs01Lw1K6VAFjxt3UpVj17U6FZbCCgEjjH7683aN_ez9YyA/exec", {
+    const resp = await fetch("https://script.google.com/macros/s/AKfycbwqkWy7F9ba4F89ASpSfuyiRc0yExqIZvgYK4QB-1d1qTA5HNJcxtliSpb2jH2XTX7MJA/exec", {
       method: "POST",
       body: JSON.stringify({
         acao: "verificar",
@@ -301,6 +301,7 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
 
 
 
