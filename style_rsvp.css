@@ -18,7 +18,7 @@ body {
 
 .form-card { 
 	width:100%; 
-	max-width:520px; 
+	max-width:760px; 
 	background-image:url('convite-mobile.png'); 
 	background-size:cover; 
 	background-position:center; 
@@ -138,6 +138,7 @@ h2 {
 
 
 @media (max-width:600px) { .form-card { padding:60px 25px 60px; } }
+
 
 
 
