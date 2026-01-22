@@ -302,7 +302,72 @@ async function verificarDuplicado(contactoCompleto) {
   }
 }
 
+// Função de teste do formulário
+function testarFormulario() {
+  const form = document.getElementById("rsvpForm");
+  
+  // Lista de testes simulados
+  const testes = [
+    {desc: "Honeypot preenchido", overrides: {website: "spam"}},
+    {desc: "Token inválido", overrides: {token: "xpto"}},
+    {desc: "Contacto inválido", overrides: {contacto: "123"}},
+    {desc: "Número de acompanhantes errado", overrides: {num_pessoas: 3, nomes: "Ana, Maria"}},
+    {desc: "ReCAPTCHA não preenchido", overrides: {grecaptchaResponse: ""}},
+    {desc: "Tudo correto", overrides: {num_pessoas:1, nomes:"", contacto:"912345678", token:"rsvp-rita-joao-2026", grecaptchaResponse:"dummy"}}
+  ];
+
+  testes.forEach((teste,i) => {
+    console.log(`\n=== Teste ${i+1}: ${teste.desc} ===`);
+
+    // Pega os dados atuais do formulário
+    const formData = Object.fromEntries(new FormData(form));
+
+    // Substitui campos conforme o teste
+    Object.assign(formData, teste.overrides);
+
+    // 1️⃣ Honeypot
+    if(formData.website){
+      console.log("❌ Spam detectado (honeypot). Alerta disparado.");
+      return;
+    }
+
+    // 2️⃣ Token
+    if(formData.token !== "rsvp-rita-joao-2026"){
+      console.log("❌ Token inválido. Alerta disparado.");
+      return;
+    }
+
+    // 3️⃣ Contacto
+    if(formData.contacto && formData.contacto.length < 9){
+      console.log("❌ Contacto inválido. Alerta disparado.");
+      return;
+    }
+
+    // 4️⃣ Nomes acompanhantes
+    const numPessoas = parseInt(formData.num_pessoas) || 1;
+    if(numPessoas > 1){
+      const arr = (formData.nomes||"").split(",").map(n=>n.trim()).filter(n=>n);
+      if(arr.length + 1 !== numPessoas){
+        console.log(`❌ Nomes acompanhantes incorretos. Alerta disparado.`);
+        return;
+      }
+    }
+
+    // 5️⃣ ReCAPTCHA
+    if(!formData.grecaptchaResponse){
+      console.log("❌ ReCAPTCHA não preenchido. Alerta disparado.");
+      return;
+    }
+
+    console.log("✅ Todos os campos corretos. Formulário poderia ser enviado.");
+  });
+}
+
+// Rodar os testes ao carregar a página
+document.addEventListener("DOMContentLoaded", testarFormulario);
+
 </script>
 </body>
 </html>
+
 
