@@ -15,7 +15,7 @@ body {
 }
 
 /* ===== Envelope ===== */
-.envelope-wrapper {
+/*.envelope-wrapper {
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -23,7 +23,16 @@ body {
     position: relative;
 	opacity: 1;
     transition: opacity 0.6s ease;
+}*/
+.envelope-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	opacity: 1;
+    transition: opacity 0.6s ease;
 }
+
 
 .envelope-wrapper.esconder {
     opacity: 0;
@@ -198,5 +207,11 @@ body.mostrar {
 	.hora { font-size: 19px ;font-style: italic; margin-bottom: 28px; }
 	.local { font-size: 17px ;margin-bottom: 35px; }
 	.pequeno { font-size: 17px; margin-bottom: 28px; }
+	html, body {
+	    margin: 0;
+	    padding: 0;
+	    height: 100%;
+	}
 }
+
 
