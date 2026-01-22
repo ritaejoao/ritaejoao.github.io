@@ -247,14 +247,14 @@ try {
     if(result.status === "ok"){
       //alert("Confirmação registada! A redirecionar...");
 	  if(formData.presenca === "Sim"){
-		msg.textContent = "✅ Que alegria saber que estarão connosco! Obrigado por fazerem parte deste dia tão especial.";
-		msg.style.color = "green";
+		msg.textContent = "Que alegria saber que estarão connosco! Obrigado por fazerem parte deste dia tão especial.";
+		msg.style.color = "black";
 		form.reset();
 		atualizarCampos();
 		//voltarAoEnvelope();
 		setTimeout(voltarAoEnvelope, 7000);
 	  } else {
-		msg.textContent = "✅ Compreendemos a vossa ausência e agradecemos desde já o carinho.";
+		msg.textContent = "Compreendemos a vossa ausência e agradecemos desde já o carinho.";
 		msg.style.color = "black";
 		setTimeout(voltarAoEnvelope, 7000);
 	   }
@@ -369,6 +369,7 @@ document.addEventListener("DOMContentLoaded", testarFormulario);
 </script>
 </body>
 </html>
+
 
 
 
