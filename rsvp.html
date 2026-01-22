@@ -13,6 +13,11 @@
   <div class="form-content">
     <h2>Confirmação de Presença</h2>
     <form id="rsvpForm">
+	  <!-- Honeypot (invisível) -->
+	<input type="text" name="website" style="display:none" autocomplete="off">
+
+	  <!-- Token secreto -->
+	<input type="hidden" name="token" value="rsvp-rita-joao-2026">
       <div class="form-grid">
         <label for="nome">Nome *</label>
         <input type="text" name="nome" id="nome" placeholder="Nome" required>
@@ -150,7 +155,19 @@ form.addEventListener("submit", async function(e){
 try {
   // 1️⃣ Preparar dados
   const formData = Object.fromEntries(new FormData(form));
+  // 1️⃣ Honeypot
+	if(formData.website){  // se preenchido, é bot
+	  alert("Spam detectado. Submissão bloqueada.");
+	  btn.disabled = false;
+	  return;
+	}
 
+  // 2️⃣ Token secreto
+	if(formData.token !== "rsvp-rita-joao-2026"){
+	  alert("Token inválido. Submissão bloqueada.");
+	  btn.disabled = false;
+	  return;
+	}
   const numPessoas = parseInt(formData.num_pessoas) || 1;
 
   if(formData.presenca === "Sim"){
@@ -288,3 +305,4 @@ async function verificarDuplicado(contactoCompleto) {
 </script>
 </body>
 </html>
+
