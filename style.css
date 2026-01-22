@@ -15,17 +15,15 @@ body {
 }
 
 /* ===== Envelope ===== */
-/*.envelope-wrapper {
+.envelope-wrapper {
     height: 100vh;
-	min-height: 100vh;
-    min-height: 100svh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 	opacity: 1;
     transition: opacity 0.6s ease;
-}*/
+}
 
 .envelope-wrapper.esconder {
     opacity: 0;
@@ -36,16 +34,6 @@ body {
     height: 370px;
     cursor: pointer;
     position: relative;
-}
-
-.envelope-wrapper {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-	opacity: 1;
-    transition: opacity 0.6s ease;
 }
 
 /* ===== Lacre sobre envelope ===== */
@@ -211,6 +199,7 @@ body.mostrar {
 	.local { font-size: 17px ;margin-bottom: 35px; }
 	.pequeno { font-size: 17px; margin-bottom: 28px; }
 }
+
 
 
 
